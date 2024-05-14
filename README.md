@@ -32,6 +32,13 @@ ___
 ```mermaid
 flowchart LR
 
+    Client("Client
+    Пользователь взаимодействует
+    с приложением с помощью:
+    - Мобильного приложения
+    - Web-версии из браузера
+    ")
+
     Frontend("Frontend
     Telegram-bot
     Выступает как клиентское
@@ -50,7 +57,7 @@ flowchart LR
     банковской системы, обрабатывает 
     транзакции, хранит клиентские данные и т.д.")
     
-    Frontend -- http --> Middle -- http -->  Backend 
+    Client -- http --> Frontend -- http --> Middle -- http -->  Backend 
     
 ```
 
