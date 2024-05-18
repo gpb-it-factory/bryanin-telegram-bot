@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: "bryanin-telegram-bot"
+
+bot:
+  name: ${GPB_BOT_NAME}
+  token: ${GPB_BOT_TOKEN}
