@@ -1,6 +1,8 @@
 package ru.bryanin.dev.bryanintelegrambot.bot;
 
 
+import java.util.Optional;
+
 public enum CommandPool {
 
     START("/start"),
@@ -17,12 +19,12 @@ public enum CommandPool {
         return command;
     }
 
-    public static CommandPool getCommandPoolFromCommand(String command) {
+    public static Optional<CommandPool> getCommandPoolFromCommand(String command) {
         for (CommandPool commandPool : CommandPool.values()) {
             if (command.equals(commandPool.getCommand())) {
-                return commandPool;
+                return Optional.of(commandPool);
             }
         }
-        return null;
+        return Optional.empty();
     }
 }
