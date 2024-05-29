@@ -13,15 +13,34 @@ ___
 
 ### <a id="installation">Установка приложения</a>
 ___
-В ближайшее время здесь будет инструкция по установке приложения, но уже сейчас можно:
-1. Проверить версию java (требуется поддержка java 21):
+Для локальной установки приложения вам понадобятся [Git](https://git-scm.com/), [Java 21](https://axiomjdk.ru/pages/downloads/), [Gradle](https://gradle.org/), [Docker](https://www.docker.com/), поэтому:
+1. Проверьте, установлен ли Git:
+```shell
+git --version
 ```
-java --version
+Если Git не установлен, следуйте [инструкции](https://git-scm.com/book/ru/v2/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-Git) по установке для вашей платформы
+2. Проверьте, установлен ли Gradle:
+```shell
+gradle -v
 ```
-Если требуется установка или обновление java, воспользуйтесь [инструкцией](https://www.youtube.com/watch?v=kpluwWxUVNk)
-
-2. Что-то еще
-3. Третий шаг
+Если Gradle не установлен, следуйте [инструкции](https://gradle.org/install/) по установке для вашей платформы
+3. Подготовьте окружение для локального запуска приложения. Для этого в переменные окружения необходимо внести следующие записи:
+```shell
+export GPB_BOT_NAME="GPB Telegram bot"
+export GPB_BOT_TOKEN="Укажите_здесь_полученный_токен"
+```
+Если не знаете, как получить собственный токен бота, прочтите [инструкцию](https://core.telegram.org/bots/features#botfather)
+4. Клонируйте репозиторий и перейдите в каталог с программой:
+```shell
+git clone https://github.com/gpb-it-factory/bryanin-telegram-bot.git
+cd bryanin-telegram-bot
+```
+5. Запустите команду:
+```shell
+./gradlew bootRun
+```
+По этой команде Gradle соберет проект и запустит программу
+6. Для проверки работы бота перейдите в приложение Telegram или откройте [web-версию](https://web.telegram.org), затем откройте бота **@gpb_bryanin_telegram_bot**, нажмите команду "Начать", и после приветствия отправьте команду "/ping" - в ответ Вы должны получить "pong"
 
 
 ### <a id="features">Возможности приложения</a>
@@ -29,7 +48,7 @@ ___
 Телеграм-бот позволяет эмулировать запросы пользователей и отправлять их в сервис основной бизнес-логики:
 
 
-```mermaid
+```mermaid 
 flowchart LR
 
     Client("Client
