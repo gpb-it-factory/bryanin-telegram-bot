@@ -5,3 +5,9 @@ spring:
 bot:
   name: ${GPB_BOT_NAME}
   token: ${GPB_BOT_TOKEN}
+
+server:
+  port: 8081
+
+middle-service:
+  baseURL: "http://0.0.0.0:8082"
