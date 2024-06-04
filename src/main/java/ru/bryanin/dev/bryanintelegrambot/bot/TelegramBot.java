@@ -8,16 +8,16 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.Optional;
-
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
     @Value("${bot.name}")
     private String botName;
+    private final Action action;
 
-    public TelegramBot(@Value("${bot.token}") String botToken) {
+    public TelegramBot(@Value("${bot.token}") String botToken, Action action) {
         super(botToken);
+        this.action = action;
     }
 
     @Override
@@ -28,35 +28,22 @@ public class TelegramBot extends TelegramLongPollingBot {
         final Message message = update.getMessage();
         long chatId = message.getChatId();
         if(message.hasText()) {
-            String textFromReceivedMessage = message.getText();
-            String textAtSendingMessage = "Команда не распознана. Попробуйте еще";
+            String textAtSendingMessage = action.response(message);
+            sendSimpleMessage(chatId, textAtSendingMessage);
+        }
+    }
 
-            Optional<CommandPool> optionalCommandPool = CommandPool.getCommandPoolFromCommand(textFromReceivedMessage);
-            if (optionalCommandPool.isPresent())  {
-                switch (optionalCommandPool.get()) {
-                    case START:
-                        textAtSendingMessage = "Добро пожаловать в GPB Telegram bot!";
-                        break;
-                    case HELP:
-                        textAtSendingMessage = "Основной функционал бота на данный момент - отвечать \"pong\" на команду \"/ping\"";
-                        break;
-                    case PING:
-                        textAtSendingMessage = "pong";
-                        break;
-                }
-            }
-
-            try {
-                sendApiMethod(
-                        SendMessage
-                                .builder()
-                                .chatId(chatId)
-                                .text(textAtSendingMessage)
-                                .build()
-                );
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
+    public void sendSimpleMessage(long chatId, String textAtSendingMessage) {
+        try {
+            sendApiMethod(
+                    SendMessage
+                            .builder()
+                            .chatId(chatId)
+                            .text(textAtSendingMessage)
+                            .build()
+            );
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
         }
     }
 

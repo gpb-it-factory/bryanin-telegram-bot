@@ -17,6 +17,8 @@ jobs:
           java-version: '21'
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+      - name: Run chmod to make gradlew executable run
+        run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew bootRun
       - name: Test with Gradle
