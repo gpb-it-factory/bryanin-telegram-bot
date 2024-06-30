@@ -1,48 +1,34 @@
 package ru.bryanin.dev.bryanintelegrambot.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@NoArgsConstructor
+@Getter
 public class TelegramUser {
 
-    private Long telegramId;
-    private Long backendId;
+    @JsonProperty("userTelegramId")
+    private Long userTelegramId;
+    @JsonProperty("userName")
+    private String userName;
+    @JsonProperty("accountName")
+    private String accountName;
 
-    public TelegramUser() {
-    }
-
-    public TelegramUser(Long telegramId) {
-        this.telegramId = telegramId;
-        this.backendId = null;
-    }
-
-    public TelegramUser(Long telegramId, Long backendId) {
-        this.telegramId = telegramId;
-        this.backendId = backendId;
-    }
-
-    public long getTelegramId() {
-        return telegramId;
-    }
-
-    public String getTelegramIdToString() {
-        return "{" +
-                "\"" + "telegramId" + "\"" + " : " + "\"" + telegramId + "\"" +
-                '}';
-    }
-
-    public long getBackendId() {
-        return backendId;
-    }
-
-    public String getBackendIdToString() {
-        return "{" +
-                "\"" + "backendId" + "\"" + " : " + "\"" + backendId + "\"" +
-                '}';
+    public TelegramUser(Long userTelegramId, String userName) {
+        this.userTelegramId = userTelegramId;
+        this.userName = userName;
+        this.accountName = "Акционный";
     }
 
     @Override
     public String toString() {
         return "{" +
-                "\"" + "telegramId" + "\"" + " : " + "\"" + telegramId + "\"" +
-                "\"" + "backendId" + "\"" + " : " + "\"" + backendId + "\"" +
+                "\"" + "userTelegramId" + "\"" + " : " + "\"" + userTelegramId + "\"" + ", \n" +
+                "\"" + "userName" + "\"" + " : " + "\"" + userName + "\"" + ", \n" +
+                "\"" + "accountName" + "\"" + " : " + "\"" + accountName + "\"" +
                 '}';
     }
 }

@@ -1,0 +1,5 @@
+package ru.bryanin.dev.bryanintelegrambot.handlers;
+
+public interface KnownHandler extends Handler {
+    // Все хэндлеры, кроме UnknownCommandHandler, реализуют данный интерфейс
+}

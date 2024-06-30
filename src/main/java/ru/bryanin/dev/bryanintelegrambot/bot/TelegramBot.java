@@ -7,17 +7,18 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.bryanin.dev.bryanintelegrambot.handlers.Handler;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
 
     @Value("${bot.name}")
     private String botName;
-    private final Action action;
+    private final Dispatcher dispatcher;
 
-    public TelegramBot(@Value("${bot.token}") String botToken, Action action) {
+    public TelegramBot(@Value("${bot.token}") String botToken, Dispatcher dispatcher) {
         super(botToken);
-        this.action = action;
+        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -25,15 +26,18 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.getMessage() == null) {
             return;
         }
+
         final Message message = update.getMessage();
         long chatId = message.getChatId();
+
         if(message.hasText()) {
-            String textAtSendingMessage = action.response(message);
-            sendSimpleMessage(chatId, textAtSendingMessage);
+            Handler handler = dispatcher.getHandler(message.getText());
+            String textAtSendingMessage = handler.handle(message);
+            sendMessage(chatId, textAtSendingMessage);
         }
     }
 
-    public void sendSimpleMessage(long chatId, String textAtSendingMessage) {
+    public void sendMessage(long chatId, String textAtSendingMessage) {
         try {
             sendApiMethod(
                     SendMessage

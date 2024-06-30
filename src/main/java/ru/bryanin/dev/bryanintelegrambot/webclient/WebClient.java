@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestClient;
 import ru.bryanin.dev.bryanintelegrambot.dto.TelegramUser;
+import ru.bryanin.dev.bryanintelegrambot.dto.Transfer;
+
+import java.math.BigDecimal;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -14,22 +17,70 @@ public class WebClient {
     @Value("${middle-service.baseURL}")
     private String middleServiceBaseURL;
     private final RestClient restClient;
+    private final String requestErrorMessage = "При выполнении запроса произошла ошибка";
+    private final String accountName = "{\n" + "\"accountName\": \"Акционный\"" + "\n" + "}";
 
     public WebClient() {
-        restClient = RestClient.builder().baseUrl(middleServiceBaseURL).build();
+        restClient = RestClient.builder()
+                .baseUrl(middleServiceBaseURL)
+                .build();
     }
 
-    public @ResponseBody String registrationResponse(long telegramId) {
-        TelegramUser user = new TelegramUser(telegramId);
-        String result = restClient
-                .post()
-                .uri(middleServiceBaseURL + "/users")
-                .accept(APPLICATION_JSON)
-                .body(user.getTelegramIdToString())
-                .retrieve()
-                .body(String.class);
-        System.out.println(result);
-        return result;
+    public @ResponseBody String register(TelegramUser user) {
+        try {
+            return restClient
+                    .post()
+                    .uri(middleServiceBaseURL + "/users")
+                    .accept(APPLICATION_JSON)
+                    .body(user.toString())
+                    .retrieve()
+                    .body(String.class);
+        } catch (Exception e) {
+            return requestErrorMessage;
+        }
     }
+
+    public @ResponseBody String createAccount(TelegramUser user) {
+        try {
+            return restClient
+                    .post()
+                    .uri(middleServiceBaseURL + "/users/" + user.getUserTelegramId() + "/accounts")
+                    .accept(APPLICATION_JSON)
+                    .body(accountName)
+                    .retrieve()
+                    .body(String.class);
+        } catch (Exception e) {
+            return requestErrorMessage;
+        }
+    }
+
+    public @ResponseBody String requestBalance(TelegramUser user) {
+        try {
+            return restClient
+                    .get()
+                    .uri(middleServiceBaseURL + "/users/" + user.getUserTelegramId() + "/accounts")
+                    .accept(APPLICATION_JSON)
+                    .retrieve()
+                    .body(String.class);
+        } catch (Exception e) {
+            return requestErrorMessage;
+        }
+    }
+
+    public @ResponseBody String transfer(String fromUserName, String toUserName, BigDecimal amount) {
+        Transfer transfer = new Transfer(fromUserName, toUserName, amount);
+        try {
+            return restClient
+                    .post()
+                    .uri(middleServiceBaseURL + "/transfers")
+                    .accept(APPLICATION_JSON)
+                    .body(transfer)
+                    .retrieve()
+                    .body(String.class);
+        } catch (Exception e) {
+            return requestErrorMessage;
+        }
+    }
+
 
 }
