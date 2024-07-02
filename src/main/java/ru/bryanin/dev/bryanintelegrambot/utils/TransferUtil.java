@@ -1,5 +1,6 @@
 package ru.bryanin.dev.bryanintelegrambot.utils;
 
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,11 +11,11 @@ import java.util.regex.Pattern;
 @Component
 public class TransferUtil {
 
-    public List<String> convertCommandToWords(String command) {
-        return List.of(command.strip().split(" "));
+    public static List<String> convertCommandToWords(@NonNull String command) {
+        return List.of(command.strip().split("\\s+"));
     }
 
-    public boolean isCommandCorrect(String command) {
+    public static boolean isCommandCorrect(@NonNull String command) {
         List<String> words = convertCommandToWords(command);
 
         if(words == null || words.size() != 3 || words.get(1).length() < 5) {
@@ -45,11 +46,11 @@ public class TransferUtil {
         return true;
     }
 
-    public String getUserNameFromCommand(String command) {
+    public static String getUserNameFromCommand(@NonNull String command) {
         return convertCommandToWords(command).get(1);
     }
 
-    public String getAmountFromCommand(String command) {
+    public static String getAmountFromCommand(@NonNull String command) {
         return convertCommandToWords(command).get(2);
     }
 }
