@@ -2,7 +2,9 @@ package ru.bryanin.dev.bryanintelegrambot.bot;
 
 import org.junit.jupiter.api.*;
 import ru.bryanin.dev.bryanintelegrambot.AbstractTest;
-import ru.bryanin.dev.bryanintelegrambot.handlers.*;
+import ru.bryanin.dev.bryanintelegrambot.handlers.known.KnownHandler;
+import ru.bryanin.dev.bryanintelegrambot.handlers.known.impl.*;
+import ru.bryanin.dev.bryanintelegrambot.handlers.unknown.impl.UnknownCommandHandler;
 import ru.bryanin.dev.bryanintelegrambot.webclient.WebClient;
 
 import java.util.Set;

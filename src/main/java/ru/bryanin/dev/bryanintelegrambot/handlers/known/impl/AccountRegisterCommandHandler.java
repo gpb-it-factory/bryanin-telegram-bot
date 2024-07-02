@@ -1,17 +1,18 @@
-package ru.bryanin.dev.bryanintelegrambot.handlers;
+package ru.bryanin.dev.bryanintelegrambot.handlers.known.impl;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.bryanin.dev.bryanintelegrambot.dto.TelegramUser;
+import ru.bryanin.dev.bryanintelegrambot.handlers.known.KnownHandler;
 import ru.bryanin.dev.bryanintelegrambot.webclient.WebClient;
 
 @Component
-public class UserRegisterCommandHandler implements KnownHandler {
+public class AccountRegisterCommandHandler implements KnownHandler {
 
-    private final String COMMAND = "/register";
+    private final String COMMAND = "/createaccount";
     private final WebClient webClient;
 
-    public UserRegisterCommandHandler(WebClient webClient) {
+    public AccountRegisterCommandHandler(WebClient webClient) {
         this.webClient = webClient;
     }
 
@@ -20,7 +21,7 @@ public class UserRegisterCommandHandler implements KnownHandler {
         Long userTelegramId = message.getFrom().getId();
         String userName = message.getFrom().getUserName();
         TelegramUser user = new TelegramUser(userTelegramId, userName);
-        return webClient.register(user);
+        return webClient.createAccount(user);
     }
 
     @Override

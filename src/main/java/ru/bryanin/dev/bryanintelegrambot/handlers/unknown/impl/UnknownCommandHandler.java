@@ -1,7 +1,8 @@
-package ru.bryanin.dev.bryanintelegrambot.handlers;
+package ru.bryanin.dev.bryanintelegrambot.handlers.unknown.impl;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
+import ru.bryanin.dev.bryanintelegrambot.handlers.unknown.UnknownHandler;
 
 @Component
 public class UnknownCommandHandler implements UnknownHandler {

@@ -1,8 +1,8 @@
 package ru.bryanin.dev.bryanintelegrambot.bot;
 import org.springframework.stereotype.Component;
 import ru.bryanin.dev.bryanintelegrambot.handlers.Handler;
-import ru.bryanin.dev.bryanintelegrambot.handlers.KnownHandler;
-import ru.bryanin.dev.bryanintelegrambot.handlers.UnknownCommandHandler;
+import ru.bryanin.dev.bryanintelegrambot.handlers.known.KnownHandler;
+import ru.bryanin.dev.bryanintelegrambot.handlers.unknown.impl.UnknownCommandHandler;
 
 import java.util.Optional;
 import java.util.Set;
